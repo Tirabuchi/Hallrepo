@@ -1,0 +1,90 @@
+{
+    "listino": [
+       { 
+        "category": "Analcolici",
+        "elements": 
+        [
+            {
+                "name": "pepsi",
+                "ingredients": [],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            }
+        ]
+
+
+    
+       },
+
+       {
+        "category": "Cocktails",
+        "elements":
+        [
+            {
+                "name": "gin tonic",
+                "ingredients": ["gin", "tonica"],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            },
+            {
+                "name": "rum cola",
+                "ingredients": ["rum", "cola"],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            },
+            {
+                "name": "cuba libre",
+                "ingredients": ["rum", "cola", "lime"],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            },
+            {
+                "name": "americano",
+                "ingredients": ["bitter", "vermouth" , "soda"],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            }
+    
+        ]
+       }
+
+    ],
+
+    "inventario": [
+        {
+            "type": "gin", 
+            "brands": [
+                {"name" : "gordon's", "isPremium": false},
+                {"name" : "malfy rosa", "isPremium": true},
+                {"name" : "hendrick's", "isPremium": true},
+                {"name" : "ondina", "isPremium": true},
+                {"name" : "bulldog", "isPremium": true},
+                {"name" : "mare", "isPremium": true},
+                {"name" : "tanqueray ten", "isPremium": true},
+                {"name" : "bombay", "isPremium": true},
+                {"name" : "tanqueray", "isPremium": true}
+            ]
+        },
+        {
+            "type": "vodka", 
+            "brands": [
+                {"name" : "smirnoff", "isPremium": false},
+                {"name" : "belvedere", "isPremium": true},
+                {"name" : "grey goose", "isPremium": true},
+                {"name" : "ciroc", "isPremium": true}
+            ] 
+        },
+        {
+            "type": "rum",  
+            "brands": [{"name" : "pampero blanco", "isPremium": false},
+             {"name":"pampero scuro", "isPremium": false},
+             {"name": "havana 7", "isPremium": true} ]
+        }
+       
+    ]
+}
