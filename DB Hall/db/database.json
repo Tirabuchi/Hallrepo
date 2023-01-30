@@ -29,6 +29,13 @@
                 "isRestricted": false
             },
             {
+                "name": "gin lemon",
+                "ingredients": ["gin", "lemon soda"],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            },
+            {
                 "name": "rum cola",
                 "ingredients": ["rum", "cola"],
                 "details": "",

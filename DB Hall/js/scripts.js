@@ -1,6 +1,10 @@
 addEventListener("load", (event) => {});
 
+const input = document.getElementById("searchInput");
+input.addEventListener('change', inputChanged);
+
  let data;
+ let filteredData;
 
 onload=(event)=>{
     
@@ -11,10 +15,6 @@ onload=(event)=>{
         console.log(json);
         dbLoaded()}
     );
-
-    
-    
-
 }
 
 function dbLoaded() {
@@ -22,13 +22,17 @@ function dbLoaded() {
     console.log(data.listino);
 
 
+
+
     let mainList = document.getElementById("listContainer");
 
     // create main parent list
     // TODO check filtering trigger
 
+    // filtering, 
+
     for (let i=0; i<data.listino.length; i++) {
-        console.log(data.listino[i]);
+
         // create category
         let cat = document.createElement("div");
         cat.classList.add("accordion");
@@ -41,7 +45,7 @@ function dbLoaded() {
         mainList.appendChild(cat);
         cat.after(panel);
 
-        // create elements
+        // create elements inside panel
         for (let z=0; z<data.listino[i].elements.length; z++) {
             let el = document.createElement("div");
             el.classList.add("accEl");
@@ -109,8 +113,9 @@ function dbLoaded() {
     
 
     // accordion listeners
-    // TODO unico FOR x listeners concat(arrays)
+    // TODO unico FOR x listeners concat(arrays) nel caso active and active2 are same modifying class
     // create methods for closeAll (when close parent accordion, set all children with subPanel class to display: none)
+    // close all subPanels when parent is clicked? MUST MANAGE ELEMENT position on page
 
     var acc = document.getElementsByClassName("accordion");
     var subAcc = document.getElementsByClassName("nestedAcc");
@@ -123,13 +128,14 @@ function dbLoaded() {
 
     
 
-    /* Toggle between hiding and showing the active panel */
+    /* Toggle between hiding and showing the active mainPanel */
     var panel = this.nextElementSibling;
     if (panel.style.display === "block") {
       panel.style.display = "none";
     } else {
       panel.style.display = "block";
     }
+
   });
 }
 
@@ -153,6 +159,64 @@ for (let i = 0; i < subAcc.length; i++) {
 
 
 }
+
+function inputChanged(e) {
+
+  
+  console.log(e.target.value);
+
+  let testString = "gi";
+  let inputString = e.target.value;
+
+  // filter listino
+  // todo chiama filtering only if value.length > 2
+  filteredListino = filterListino(inputString.toLowerCase());
+
+  // filter inventario
+ // filteredInventario = filterListino(testString)
+
+
+}
+
+function filterListino(str) {
+ 
+  let filteredList;
+  let nameFound = 0;
+
+  for (let i=0; i<data.listino.length; i++) {
+    for (let z=0; z<data.listino[i].elements.length; z++) {
+
+
+      // filter by name or ingredients (checking ingredients is not empty)
+      if (data.listino[i].elements[z].ingredients.length > 0) {
+
+        for (let w=0; w<data.listino[i].elements[z].ingredients.length; w++) {
+    
+            if (data.listino[i].elements[z].name.includes(str) || data.listino[i].elements[z].ingredients[w].includes(str)) {
+               console.log(data.listino[i].elements[z]);
+              /* let obj = { listino: []}
+               filteredList.push() */
+               // create emptyobj ONCE (function CREATECATEGORY in filteredData, resetting it in onChanges) and push this item in the right place
+              
+               break;
+            }
+          }
+      } else {
+        if (data.listino[i].elements[z].name.includes(str)) {
+
+          console.log(data.listino[i].elements[z]);
+               
+               break;
+        }
+      }
+     
+    }
+
+  }
+}
+
+// todo load list by requestanimationframe (and load one by one)
+// todo recreate sameStructure (showing categories open accordion) or just results with category ref
 
 
 
