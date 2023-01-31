@@ -4,7 +4,7 @@ const input = document.getElementById("searchInput");
 input.addEventListener('change', inputChanged);
 
  let data;
- let filteredData;
+ let filteredData = [];
 
 onload=(event)=>{
     
@@ -180,7 +180,7 @@ function inputChanged(e) {
 
 function filterListino(str) {
  
-  let filteredList;
+  filteredData = [];
   let nameFound = 0;
 
   for (let i=0; i<data.listino.length; i++) {
@@ -194,9 +194,68 @@ function filterListino(str) {
     
             if (data.listino[i].elements[z].name.includes(str) || data.listino[i].elements[z].ingredients[w].includes(str)) {
                console.log(data.listino[i].elements[z]);
-              /* let obj = { listino: []}
-               filteredList.push() */
-               // create emptyobj ONCE (function CREATECATEGORY in filteredData, resetting it in onChanges) and push this item in the right place
+            //   console.log(filteredData);
+            
+               // creation conditions (check if parent exists, eitherwise create)
+               if (filteredData.length == 0) {
+
+                // if first cat
+                let obj = 
+                {
+                  "category": data.listino[i].category,
+                  "elements": [  
+                    {
+                 "name": data.listino[i].elements[z].name,
+                 "ingredients": data.listino[i].elements[z].ingredients,
+                 "details": data.listino[i].elements[z].details,
+                 "icon": data.listino[i].elements[z].icon,
+                 "isRestricted": data.listino[i].elements[z].isRestricted
+                  }          ] 
+                }
+                console.log(obj);
+
+                filteredData.push(obj);
+           //     console.log(filteredData);
+               } else {
+              // if cat is found push item
+                for (let h=0; h<=filteredData.length-1; h++) {
+
+                  if (filteredData[h].category == data.listino[i].category) {
+  
+                    let obj = {
+                      "name": data.listino[i].elements[z].name,
+                      "ingredients": data.listino[i].elements[z].ingredients,
+                      "details": data.listino[i].elements[z].details,
+                      "icon": data.listino[i].elements[z].icon,
+                      "isRestricted": data.listino[i].elements[z].isRestricted
+                     }
+     
+                     filteredData[h].elements.push(obj);
+                     console.log(filteredData);
+  
+                 } else if (h==filteredData.length-1) {
+                // if last iteration and cat hasnt been found
+                let obj = 
+                {
+                  "category": data.listino[i].category,
+                  "elements": [  
+                    {
+                 "name": data.listino[i].elements[z].name,
+                 "ingredients": data.listino[i].elements[z].ingredients,
+                 "details": data.listino[i].elements[z].details,
+                 "icon": data.listino[i].elements[z].icon,
+                 "isRestricted": data.listino[i].elements[z].isRestricted
+                  }          ] 
+                }
+
+                filteredData.push(obj);
+             //   console.log(filteredData);
+  
+                 }
+  
+                 }
+
+               }
               
                break;
             }
@@ -204,7 +263,67 @@ function filterListino(str) {
       } else {
         if (data.listino[i].elements[z].name.includes(str)) {
 
-          console.log(data.listino[i].elements[z]);
+          // same as over
+     // creation conditions (check if parent exists, eitherwise create)
+     if (filteredData.length == 0) {
+
+      // if first cat
+      let obj = 
+      {
+        "category": data.listino[i].category,
+        "elements": [  
+          {
+       "name": data.listino[i].elements[z].name,
+       "ingredients": data.listino[i].elements[z].ingredients,
+       "details": data.listino[i].elements[z].details,
+       "icon": data.listino[i].elements[z].icon,
+       "isRestricted": data.listino[i].elements[z].isRestricted
+        }          ] 
+      }
+      console.log(obj);
+
+      filteredData.push(obj);
+   //   console.log(filteredData);
+     } else {
+    // if cat is found push item
+      for (let h=0; h<=filteredData.length-1; h++) {
+
+        if (filteredData[h].category == data.listino[i].category) {
+
+          let obj = {
+            "name": data.listino[i].elements[z].name,
+            "ingredients": data.listino[i].elements[z].ingredients,
+            "details": data.listino[i].elements[z].details,
+            "icon": data.listino[i].elements[z].icon,
+            "isRestricted": data.listino[i].elements[z].isRestricted
+           }
+
+           filteredData[h].elements.push(obj);
+           console.log(filteredData);
+
+       } else if (h==filteredData.length-1) {
+      // if last iteration and cat hasnt been found
+      let obj = 
+      {
+        "category": data.listino[i].category,
+        "elements": [  
+          {
+       "name": data.listino[i].elements[z].name,
+       "ingredients": data.listino[i].elements[z].ingredients,
+       "details": data.listino[i].elements[z].details,
+       "icon": data.listino[i].elements[z].icon,
+       "isRestricted": data.listino[i].elements[z].isRestricted
+        }          ] 
+      }
+
+      filteredData.push(obj);
+    //  console.log(filteredData);
+
+       }
+
+       }
+
+     }
                
                break;
         }
@@ -213,6 +332,8 @@ function filterListino(str) {
     }
 
   }
+
+  console.log(filteredData);
 }
 
 // todo load list by requestanimationframe (and load one by one)
