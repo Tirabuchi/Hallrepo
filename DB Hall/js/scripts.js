@@ -1,30 +1,42 @@
+//TODO: HF with scrollability
+// overflow does not work with nested bois
+
+// todo bugfix: if searchnothing returns 2 gin tonic
+
+
 addEventListener("load", (event) => {});
 
 const input = document.getElementById("searchInput");
 input.addEventListener('change', inputChanged);
 
- let data;
+ let baseData = [];
  let filteredData = [];
+
+ let isSearch = false;
 
 onload=(event)=>{
     
     fetch('./db/database.json')
     .then((response) => response.json())
     .then((json) => {
-        data=json;
+        baseData=json;
         console.log(json);
-        dbLoaded()}
+        dbLoaded(json)}
     );
 }
 
-function dbLoaded() {
+
+//TODO if not 1st loading, set first accordion to open
+function dbLoaded(data) {
    // let mainList = document.getElementById("myList");
     console.log(data.listino);
-
-
-
+     // reset list first
+    resetList();
 
     let mainList = document.getElementById("listContainer");
+
+   
+    
 
     // create main parent list
     // TODO check filtering trigger
@@ -53,9 +65,11 @@ function dbLoaded() {
             panel.appendChild(el);
 
             // nested accordion case
-                // check ingredients variants
+                // check ingredients variants, initiate subPanel here
             
-            let ingredientFound = 0; // todo returns 1 at first ingredient found, so no scelta tonic and shit
+            let ingredientsFound = false; // todo al momento se trova piu' ingredienti secondari compatibili crea due subPanel, sposta creaz subpanel sopra
+            let subPanel = document.createElement("div");
+                            subPanel.classList.add("subPanel");
 
             for (let k=0; k<data.listino[i].elements[z].ingredients.length; k++) {
 
@@ -68,15 +82,22 @@ function dbLoaded() {
                         console.log(data.listino[i].elements[z].ingredients[k]);
                         el.classList.add("nestedAcc");
 
-                        let subPanel = document.createElement("div");
-                            subPanel.classList.add("subPanel");
-                            el.after(subPanel);
+                        // if first ingredients package create panel, eitherwise add to it
+                        // todo with a counter of foundIngredientsPackage I can add multiple visualization classes from here
+
+                            if (ingredientsFound==false) {
+                              el.after(subPanel);
+                            }
+
+                            ingredientsFound = true;
+                            
                         
                         for (let u=0; u<data.inventario[w].brands.length; u++) {
 
                             
                             let subEl = document.createElement("div");
                             subEl.classList.add("accEl");
+                            subEl.classList.add("accSubEl");
                             subEl.innerText = data.inventario[w].brands[u].name;
                             subPanel.appendChild(subEl);
                 
@@ -92,85 +113,29 @@ function dbLoaded() {
 
         }
         
-
-
-
-
-        
-        // add filtering
     }
 
-
-
-
-
-
-
-
-
-
-
-    
-
-    // accordion listeners
-    // TODO unico FOR x listeners concat(arrays) nel caso active and active2 are same modifying class
-    // create methods for closeAll (when close parent accordion, set all children with subPanel class to display: none)
-    // close all subPanels when parent is clicked? MUST MANAGE ELEMENT position on page
-
-    var acc = document.getElementsByClassName("accordion");
-    var subAcc = document.getElementsByClassName("nestedAcc");
-
-
-    for (let i = 0; i < acc.length; i++) {
-       acc[i].addEventListener("click", function() {
-
-    this.classList.toggle("active");
-
-    
-
-    /* Toggle between hiding and showing the active mainPanel */
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-    }
-
-  });
-}
-
-for (let i = 0; i < subAcc.length; i++) {
-    subAcc[i].addEventListener("click", function() {
-
- this.classList.toggle("active2");
-
- 
-
- /* Toggle between hiding and showing the active2 panel */
- var subPanel = this.nextElementSibling;
- if (subPanel.style.display === "block") {
-   subPanel.style.display = "none";
- } else {
-   subPanel.style.display = "block";
- }
-});
-}
+  addAccListeners();
    
-
-
 }
 
 function inputChanged(e) {
 
   
-  console.log(e.target.value);
+  console.log("inputChanged fired: " + e.target.value);
 
   let testString = "gi";
   let inputString = e.target.value;
 
   // filter listino
+  if (inputString=="") {
+    dbLoaded(baseData);
+  } else {
   // todo chiama filtering only if value.length > 2
-  filteredListino = filterListino(inputString.toLowerCase());
+  filteredListino = filterListino(inputString.toLowerCase(), baseData);
+  }
+  
+  
 
   // filter inventario
  // filteredInventario = filterListino(testString)
@@ -178,7 +143,9 @@ function inputChanged(e) {
 
 }
 
-function filterListino(str) {
+// todo how se uno cerca la bottiglia/inventario? es. Jack. Pensaci dopo imho
+
+function filterListino(str, data) {
  
   filteredData = [];
   let nameFound = 0;
@@ -231,7 +198,7 @@ function filterListino(str) {
                      }
      
                      filteredData[h].elements.push(obj);
-                     console.log(filteredData);
+                   //  console.log(filteredData);
   
                  } else if (h==filteredData.length-1) {
                 // if last iteration and cat hasnt been found
@@ -333,11 +300,81 @@ function filterListino(str) {
 
   }
 
-  console.log(filteredData);
+  
+// obj listino QoL (mine) fix
+filteredData = { "listino": filteredData, "inventario": data.inventario };
+
+console.log(filteredData);
+  dbLoaded(filteredData);
 }
 
 // todo load list by requestanimationframe (and load one by one)
 // todo recreate sameStructure (showing categories open accordion) or just results with category ref
 
+function resetList() {
 
+  let mainList = document.getElementById("listContainer");
+
+  var child = mainList.lastElementChild; 
+        while (child) {
+            mainList.removeChild(child);
+            child = mainList.lastElementChild;
+        }
+
+}
+
+function addAccListeners() {
+
+      // accordion listeners
+    // TODO unico FOR x listeners concat(arrays) nel caso active and active2 are same modifying class
+    // create methods for closeAll (when close parent accordion, set all children with subPanel class to display: none)
+    // close all subPanels when parent is clicked? MUST MANAGE ELEMENT position on page
+    // scrolling evs
+
+    var acc = document.getElementsByClassName("accordion");
+    var subAcc = document.getElementsByClassName("nestedAcc");
+
+
+    for (let i = 0; i < acc.length; i++) {
+       acc[i].addEventListener("click", function() {
+
+    this.classList.toggle("active");
+
+    
+
+    /* Toggle between hiding and showing the active mainPanel */
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      // calc actual maxHeight of panel
+     // let parent = this.parentElement;
+    //  parent.style.maxHeight = parseInt(parent.style.maxHeight) + panel.scrollHeight + "px";
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+
+  });
+}
+
+for (let i = 0; i < subAcc.length; i++) {
+    subAcc[i].addEventListener("click", function() {
+
+ this.classList.toggle("active2");
+
+ 
+
+ /* Toggle between hiding and showing the active2 panel */
+ var subPanel = this.nextElementSibling;
+ if (subPanel.style.maxHeight) {
+   subPanel.style.maxHeight = null;
+ } else {
+  // calc actual maxHeight of panel
+   var parent = subPanel.parentElement;
+   parent.style.maxHeight = parseInt(parent.style.maxHeight) + subPanel.scrollHeight + "px";
+   subPanel.style.maxHeight = subPanel.scrollHeight + "px";
+ }
+});
+}
+
+}
 

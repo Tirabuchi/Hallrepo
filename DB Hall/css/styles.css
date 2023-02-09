@@ -50,41 +50,84 @@ table {
 
 /* FINE RESET */
 
+/* general styles */
+
+@font-face {
+  font-family: "Neue Plak W01";
+  src: url('fonts/neueplakw01.woff2') format('woff2'),
+       url('fonts/neueplakw01.woff') format('woff')
+}
+
+body {
+  color: white;
+  background-color: black;
+  font-family: "Neue Plak W01"
+}
+
+
+
+
+
 /* accordion base */
 
+.bigCont {
+  margin: 0 2em;
+  width: calc(100% - 4em); 
+}
+
 .accordion {
-    background-color: #eee;
-    color: #444;
-    padding: 18px;
-    width: 100%;
+    background-color: rgb(44, 44, 44);
+    text-transform: uppercase;
+   
+    padding: 2em;
+    width: calc(100% - 4em);
     text-align: left;
     border: none;
     outline: none;
     transition: 0.4s;
   }
+
+  .accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+  }
   
   .active, .accordion:hover {
-    background-color: #ccc;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    transition: 0.1s color, background-color;
   }
   
   /* Style the accordion panel. Note: hidden by default */
-  .panel {
-    padding: 0 18px;
-    background-color: white;
-    display: none;
+  .panel, .subPanel {
+    max-height: 0;
+
     overflow: hidden;
+    transition: max-height 0.2s ease-out;
   }
 
   .accEl {
-    width: 100%;
+    padding: 1em;
+    width: calc(100% - 2em);
+    height: 4em;
+    text-align: left;
+    background-color: rgb(36, 36, 36);
+    color: white;
+    text-transform: capitalize
 
   }
 
   .nestedAcc {
-    background-color: #eee;
+    background-color: rgb(26, 26, 26);
     color: #444;
-    padding: 18px;
-    width: 100%;
+
     text-align: left;
     border: none;
     outline: none;
@@ -92,17 +135,25 @@ table {
   }
 
   .active2, .nestedAcc:hover {
-    background-color: rgb(184, 84, 84);
+    background-color: rgb(124, 124, 124);
+    color: white;
   }
 
   .accSubEl {
     width: 100%;
+    background-color: rgb(0, 0, 0);
+    color: white;
 
   }
 
   .subPanel {
-    padding: 0 18px;
     background-color: white;
-    display: none;
-    overflow: hidden;
+  }
+
+  .accSubEl {
+    height: 50px
+  }
+
+  .listContainer {
+    width: 100%
   }
