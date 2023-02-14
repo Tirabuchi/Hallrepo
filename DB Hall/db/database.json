@@ -58,6 +58,27 @@
             }
     
         ]
+       },
+       {
+        "category": "Birre",
+        "elements":
+        [
+            {
+                "name": "Ichnusa",
+                "ingredients": [],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            },
+            {
+                "name": "Tennent's",
+                "ingredients": [],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            }
+    
+        ]
        }
 
     ],

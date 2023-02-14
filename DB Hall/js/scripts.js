@@ -1,10 +1,10 @@
 //TODO: 
-// closing parent accordion closes all children, scrollable stays on top
+// scrollable stays on top
 
 // if has class active and its boundingrect ha pixel esterni (its part in page is less than his height), set its pos to fixed, add top margin (its height) to firstChild
 // add scroll listeners when adding active class and remove same way
 
-// todo bugfix: if searchnothing returns 2 gin tonic
+// todo aggiorna db e pensabbene come mettere pricing con tutti gli esempi (drinks, shot, tequilaPompelmo, drinkdellestate, birre)
 
 
 addEventListener("load", (event) => {});
@@ -356,8 +356,16 @@ function addAccListeners() {
       panel.style.maxHeight = panel.scrollHeight + "px";
     }
 
-    // todo if class was active, close all subpanels
-   
+    // if panel was active, close all active subpanels
+    if (!this.classList.contains('active')) {
+      console.log('container closed!');
+      for (const child of panel.children) {
+        if (child.classList.contains('active2')) {
+          child.classList.remove('active2');
+          var subPanelToClose = child.nextElementSibling;
+          subPanelToClose.style.maxHeight = null;
+        }      }    
+    }
 
   });
 }
