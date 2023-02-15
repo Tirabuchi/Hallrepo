@@ -1,4 +1,5 @@
-//TODO: 
+//TODO: check scroll distances cuz them doest seem right
+// add maxheight a contenitore accordion max in modo che non si sposti se chiudi un accordion alla fine
 // scrollable stays on top
 
 // if has class active and its boundingrect ha pixel esterni (its part in page is less than his height), set its pos to fixed, add top margin (its height) to firstChild
@@ -24,7 +25,9 @@ onload=(event)=>{
     .then((json) => {
         baseData=json;
         console.log(json);
-        dbLoaded(json)}
+        dbLoaded(json);
+        loadObservers();
+      }
     );
 }
 
@@ -356,15 +359,74 @@ function addAccListeners() {
       panel.style.maxHeight = panel.scrollHeight + "px";
     }
 
+    // accordion header position observer
+    let observerAcc = new IntersectionObserver(entries => {
+
+    /*  let obsOptions = {
+        root: null,
+        threshold: [0,1]
+      } */
+      if (entries[0].boundingClientRect.y <= 0)
+      {
+         // fix header position and add margin to compensate its space
+         entries[0].target.classList.add('fixedAcc');
+         panel.style.marginTop = entries[0].boundingClientRect.height + "px";
+    
+    } 
+    }
+    //, obsOptions
+    );
+    let panelObsOptions = {
+      root: null,
+      threshold: [0,0.1,0.2,0.8,0.9,1]
+    }
+    let observerPanel = new IntersectionObserver(entries => {
+      console.log('panel details:');
+      console.log(entries[0].target);
+      console.log(entries[0]);
+
+      // if panel has space from top
+      if (entries[0].boundingClientRect.y > 0) {
+        
+        entries[0].target.previousSibling.classList.remove('fixedAcc');
+        panel.style.marginTop = 0;
+
+        // or if scrolled completely, close it
+      }  else if (entries[0].boundingClientRect.bottom < entries[0].target.previousSibling.getBoundingClientRect().height) {
+
+
+        // chiudi tutto duro maronn bruteforce
+        // todo check animazioni
+       entries[0].target.previousSibling.classList.remove('fixedAcc');
+       entries[0].target.previousSibling.classList.remove('active');
+       panel.style.marginTop = 0;
+       observerAcc.unobserve(entries[0].target.previousSibling);
+       observerPanel.unobserve(panel);
+       panel.style.maxHeight = null;
+
+      } 
+
+    }, panelObsOptions)
+
     // if panel was active, close all active subpanels
     if (!this.classList.contains('active')) {
-      console.log('container closed!');
+
+      // close scroll listeners
+       this.classList.remove('fixedAcc');
+       panel.style.marginTop = 0;
+       observerAcc.unobserve(this);
+       observerPanel.unobserve(panel);
+       // actually closing panels
       for (const child of panel.children) {
         if (child.classList.contains('active2')) {
           child.classList.remove('active2');
           var subPanelToClose = child.nextElementSibling;
           subPanelToClose.style.maxHeight = null;
         }      }    
+    } else {
+      // todo eitherwise manage scrolling top shit
+      observerAcc.observe(this);
+      observerPanel.observe(panel);
     }
 
   });
@@ -391,4 +453,11 @@ for (let i = 0; i < subAcc.length; i++) {
 }
 
 }
+
+function loadObservers() {
+
+ 
+
+}
+
 

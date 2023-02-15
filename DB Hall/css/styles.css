@@ -71,8 +71,7 @@ body {
 /* accordion base */
 
 .bigCont {
-  margin: 0 2em;
-  width: calc(100% - 4em); 
+   width: 100%;
 }
 
 .accordion {
@@ -156,4 +155,10 @@ body {
 
   .listContainer {
     width: 100%
+  }
+
+  .fixedAcc {
+    position: fixed;
+    top: 0;
+    
   }
