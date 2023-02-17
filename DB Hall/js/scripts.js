@@ -367,7 +367,7 @@ function addAccListeners() {
     let observerAcc = new IntersectionObserver(entries => {
 
      
-      if (entries[0].boundingClientRect.y < 0)
+      if (entries[0].boundingClientRect.y < 0 && entries[0].target.classList.contains('active'))
       {
          // fix header position and add margin to compensate its space
          console.log('fixing position of:');
@@ -392,9 +392,13 @@ function addAccListeners() {
       console.log(entries[0]);
       console.log(panelObsOptions)
 
+      // fix demmerda non fa desubscribe dunno why
+      if (entries[0].target.getBoundingClientRect().height!=0) {
+
+
       // if panel has space from top
-      if (entries[0].boundingClientRect.y >= 0) {
-        // todo se ci sono aperti subaccordion, si rompe SOLO SOPRA
+      if (entries[0].boundingClientRect.y > 0) {
+        // todo se ci sono aperti subaccordion, si rompe SOLO SOPRA, dovuto al fatto che evento non è fired se l'elemento è lungo
         console.log('space on top rilevato');
         console.log(entries[0].target);
         entries[0].target.previousSibling.classList.remove('fixedAcc');
@@ -423,16 +427,21 @@ function addAccListeners() {
        panel.style.maxHeight = null;
 
       } 
+      
 
-    }, panelObsOptions)
+
+    }
+  }, panelObsOptions)
 
     // if panel was active, close all active subpanels
     if (!this.classList.contains('active')) {
 
-      // close scroll listeners
+      // close scroll listeners, actually not working :(
        this.classList.remove('fixedAcc');
        panel.style.marginTop = 0;
+       console.log(observerAcc);
        observerAcc.unobserve(this);
+       console.log(panel);
        observerPanel.unobserve(panel);
        // actually closing panels
       for (const child of panel.children) {
