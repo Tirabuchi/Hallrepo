@@ -360,34 +360,43 @@ function addAccListeners() {
     }
 
     // accordion header position observer
+    let obsOptions = {
+      root: null,
+      threshold: [0,1]
+    };
     let observerAcc = new IntersectionObserver(entries => {
 
-    /*  let obsOptions = {
-        root: null,
-        threshold: [0,1]
-      } */
-      if (entries[0].boundingClientRect.y <= 0)
+     
+      if (entries[0].boundingClientRect.y < 0)
       {
          // fix header position and add margin to compensate its space
+         console.log('fixing position of:');
+         console.log(entries[0]);
          entries[0].target.classList.add('fixedAcc');
          panel.style.marginTop = entries[0].boundingClientRect.height + "px";
     
     } 
     }
-    //, obsOptions
+    , obsOptions
     );
+    // todo aggiungi margintop per offset viewport
+
     let panelObsOptions = {
       root: null,
-      threshold: [0,0.1,0.2,0.8,0.9,1]
+      threshold: [0,1],
+      rootMargin: "-" + this.getBoundingClientRect().height + "px 0px 0px 0px" 
     }
     let observerPanel = new IntersectionObserver(entries => {
       console.log('panel details:');
       console.log(entries[0].target);
       console.log(entries[0]);
+      console.log(panelObsOptions)
 
       // if panel has space from top
-      if (entries[0].boundingClientRect.y > 0) {
-        
+      if (entries[0].boundingClientRect.y >= 0) {
+        // todo se ci sono aperti subaccordion, si rompe SOLO SOPRA
+        console.log('space on top rilevato');
+        console.log(entries[0].target);
         entries[0].target.previousSibling.classList.remove('fixedAcc');
         panel.style.marginTop = 0;
 
@@ -397,8 +406,17 @@ function addAccListeners() {
 
         // chiudi tutto duro maronn bruteforce
         // todo check animazioni
+       console.log('closing all');
+       console.log(entries[0].target);
        entries[0].target.previousSibling.classList.remove('fixedAcc');
        entries[0].target.previousSibling.classList.remove('active');
+       // close subpanels
+       for (const child of panel.children) {
+        if (child.classList.contains('active2')) {
+          child.classList.remove('active2');
+          var subPanelToClose = child.nextElementSibling;
+          subPanelToClose.style.maxHeight = null;
+        }      } 
        panel.style.marginTop = 0;
        observerAcc.unobserve(entries[0].target.previousSibling);
        observerPanel.unobserve(panel);

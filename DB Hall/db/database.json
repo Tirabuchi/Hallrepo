@@ -51,7 +51,7 @@
             },
             {
                 "name": "americano",
-                "ingredients": ["bitter", "vermouth" , "soda"],
+                "ingredients": ["bitter Campari", "vermouth" , "soda"],
                 "details": "",
                 "icon": "",
                 "isRestricted": false
@@ -60,24 +60,51 @@
         ]
        },
        {
-        "category": "Birre",
+        "category": "Amari",
         "elements":
         [
             {
-                "name": "Ichnusa",
+                "name": "amaro del capo",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
                 "isRestricted": false
             },
             {
-                "name": "Tennent's",
+                "name": "jagermeister",
+                "ingredients": [],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            },
+            {
+                "name": "borghetti",
+                "ingredients": [],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            },
+            {
+                "name": "frangelico",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
                 "isRestricted": false
             }
     
+        ]
+       },
+       {
+        "category": "Aperitivi",
+        "elements":
+        [
+            {
+                "name": "Spritz",
+                "ingredients": ["bitter", "vino", "soda"],
+                "details": "",
+                "icon": "",
+                "isRestricted": false
+            }    
         ]
        },
        {
@@ -189,6 +216,13 @@
             "brands": [{"name" : "pampero blanco", "isPremium": false},
              {"name":"pampero scuro", "isPremium": false},
              {"name": "havana 7", "isPremium": true} ]
+        },
+        {
+            "type": "bitter",  
+            "brands": [{"name" : "aperol", "isPremium": false},
+             {"name": "campari", "isPremium": false},
+             {"name": "cynar", "isPremium": false},
+             {"name": "misto", "isPremium": false} ]
         }
        
     ]

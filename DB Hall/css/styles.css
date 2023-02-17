@@ -72,6 +72,7 @@ body {
 
 .bigCont {
    width: 100%;
+   min-height: 9000px;
 }
 
 .accordion {
@@ -98,7 +99,7 @@ body {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
   }
   
-  .active, .accordion:hover {
+  .active {
     background-color: rgb(255, 255, 255);
     color: black;
     transition: 0.1s color, background-color;
@@ -133,7 +134,7 @@ body {
     transition: 0.4s;
   }
 
-  .active2, .nestedAcc:hover {
+  .active2 {
     background-color: rgb(124, 124, 124);
     color: white;
   }
