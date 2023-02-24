@@ -370,8 +370,8 @@ function addAccListeners() {
       if (entries[0].boundingClientRect.y < 0 && entries[0].target.classList.contains('active'))
       {
          // fix header position and add margin to compensate its space
-         console.log('fixing position of:');
-         console.log(entries[0]);
+        /* console.log('fixing position of:');
+         console.log(entries[0]); */
          entries[0].target.classList.add('fixedAcc');
          panel.style.marginTop = entries[0].boundingClientRect.height + "px";
     
@@ -383,14 +383,14 @@ function addAccListeners() {
 
     let panelObsOptions = {
       root: null,
-      threshold: [0,1],
+      threshold: [0,0.05,0.1,0.2,0.3,0.5,0.7,0.8,0.9,0.95,1],
       rootMargin: "-" + this.getBoundingClientRect().height + "px 0px 0px 0px" 
     }
     let observerPanel = new IntersectionObserver(entries => {
-      console.log('panel details:');
+    /*  console.log('panel details:');
       console.log(entries[0].target);
       console.log(entries[0]);
-      console.log(panelObsOptions)
+      console.log(panelObsOptions); */
 
       // fix demmerda non fa desubscribe dunno why
       if (entries[0].target.getBoundingClientRect().height!=0) {
@@ -398,9 +398,9 @@ function addAccListeners() {
 
       // if panel has space from top
       if (entries[0].boundingClientRect.y > 0) {
-        // todo se ci sono aperti subaccordion, si rompe SOLO SOPRA, dovuto al fatto che evento non è fired se l'elemento è lungo
-        console.log('space on top rilevato');
-        console.log(entries[0].target);
+        
+      /*  console.log('space on top rilevato');
+        console.log(entries[0].target); */
         entries[0].target.previousSibling.classList.remove('fixedAcc');
         panel.style.marginTop = 0;
 
@@ -410,10 +410,13 @@ function addAccListeners() {
 
         // chiudi tutto duro maronn bruteforce
         // todo check animazioni
-       console.log('closing all');
-       console.log(entries[0].target);
+      
+      /* console.log('closing all');
+       console.log(entries[0].target); */
        entries[0].target.previousSibling.classList.remove('fixedAcc');
        entries[0].target.previousSibling.classList.remove('active');
+       
+       
        // close subpanels
        for (const child of panel.children) {
         if (child.classList.contains('active2')) {
@@ -425,6 +428,18 @@ function addAccListeners() {
        observerAcc.unobserve(entries[0].target.previousSibling);
        observerPanel.unobserve(panel);
        panel.style.maxHeight = null;
+
+       //scrolling to previous panel opening position to avoid jumps from empty space
+       var bodyRect = document.body.getBoundingClientRect();
+       var panelRect = panel.getBoundingClientRect();
+       var panelOffset = bodyRect.top-panelRect.top;
+       var scrollPos = panelOffset * -1 - entries[0].target.previousSibling.getBoundingClientRect().height;
+       console.log('bodyRect: ');
+       console.log(bodyRect);
+       console.log('panelRect: ');
+       console.log(panelRect);
+       console.log(scrollPos);
+       window.scrollTo(0,scrollPos);
 
       } 
       
