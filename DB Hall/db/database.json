@@ -9,7 +9,9 @@
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "1"
             }
         ]
 
@@ -26,35 +28,45 @@
                 "ingredients": ["gin", "tonica"],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": ["gin"],
+                "priceCategory": "3"
             },
             {
                 "name": "gin lemon",
                 "ingredients": ["gin", "lemon soda"],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": ["gin"],
+                "priceCategory": "3"
             },
             {
                 "name": "rum cola",
                 "ingredients": ["rum", "cola"],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": ["rum"],
+                "priceCategory": "3"
             },
             {
                 "name": "cuba libre",
                 "ingredients": ["rum", "cola", "lime"],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": ["rum"],
+                "priceCategory": "3"
             },
             {
                 "name": "americano",
-                "ingredients": ["bitter Campari", "vermouth" , "soda"],
+                "ingredients": ["bitter", "vermouth" , "soda"],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "3"
             }
     
         ]
@@ -68,28 +80,36 @@
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "1"
             },
             {
                 "name": "jagermeister",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "1"
             },
             {
                 "name": "borghetti",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "1"
             },
             {
                 "name": "frangelico",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "1"
             }
     
         ]
@@ -103,7 +123,9 @@
                 "ingredients": ["bitter", "vino", "soda"],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             }    
         ]
        },
@@ -116,14 +138,18 @@
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             },
             {
                 "name": "Tennent's",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             }
     
         ]
@@ -137,28 +163,36 @@
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             },
             {
                 "name": "Tennent's",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             },
             {
                 "name": "Tennent's",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             },
             {
                 "name": "Tennent's",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             }
     
         ]
@@ -172,14 +206,18 @@
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             },
             {
                 "name": "Tennent's",
                 "ingredients": [],
                 "details": "",
                 "icon": "",
-                "isRestricted": false
+                "isRestricted": false,
+                "variants": [],
+                "priceCategory": "2"
             }
     
         ]
@@ -191,38 +229,72 @@
         {
             "type": "gin", 
             "brands": [
-                {"name" : "gordon's", "isPremium": false},
-                {"name" : "malfy rosa", "isPremium": true},
-                {"name" : "hendrick's", "isPremium": true},
-                {"name" : "ondina", "isPremium": true},
-                {"name" : "bulldog", "isPremium": true},
-                {"name" : "mare", "isPremium": true},
-                {"name" : "tanqueray ten", "isPremium": true},
-                {"name" : "bombay", "isPremium": true},
-                {"name" : "tanqueray", "isPremium": true}
+                {"name" : "gordon's", "priceCategory": 3},
+                {"name" : "malfy rosa", "priceCategory": 4},
+                {"name" : "hendrick's", "priceCategory": 4},
+                {"name" : "ondina", "priceCategory": 4},
+                {"name" : "bulldog", "priceCategory": 4},
+                {"name" : "mare", "priceCategory": 4},
+                {"name" : "tanqueray ten", "priceCategory": 4},
+                {"name" : "bombay", "priceCategory": 4},
+                {"name" : "tanqueray", "priceCategory": 4}
             ]
         },
         {
             "type": "vodka", 
             "brands": [
-                {"name" : "smirnoff", "isPremium": false},
-                {"name" : "belvedere", "isPremium": true},
-                {"name" : "grey goose", "isPremium": true},
-                {"name" : "ciroc", "isPremium": true}
+                {"name" : "smirnoff", "priceCategory": 3},
+                {"name" : "belvedere", "priceCategory": 4},
+                {"name" : "grey goose", "priceCategory": 4},
+                {"name" : "ciroc", "priceCategory": 4}
             ] 
         },
         {
             "type": "rum",  
-            "brands": [{"name" : "pampero blanco", "isPremium": false},
-             {"name":"pampero scuro", "isPremium": false},
-             {"name": "havana 7", "isPremium": true} ]
+            "brands": [{"name" : "pampero blanco", "priceCategory": 3},
+             {"name":"pampero scuro", "priceCategory": 4},
+             {"name": "havana 7", "priceCategory": 4} ]
         },
         {
             "type": "bitter",  
-            "brands": [{"name" : "aperol", "isPremium": false},
-             {"name": "campari", "isPremium": false},
-             {"name": "cynar", "isPremium": false},
-             {"name": "misto", "isPremium": false} ]
+            "brands": [{"name" : "aperol", "priceCategory": 2},
+             {"name": "campari", "priceCategory": 2},
+             {"name": "cynar", "priceCategory": 2},
+             {"name": "misto", "priceCategory": 2} ]
+        }
+       
+    ],
+
+    "pricingCategories": [
+        {
+            "index": 0, 
+            "icon": "",
+            "details": "h2o",
+            "price": "2"
+        },
+        {
+            "index": 1, 
+            "icon": "",
+            "details": "anal/amari",
+            "price": "4"
+        },
+        {
+            "index": 2, 
+            "icon": "",
+            "details": "birra/spritz",
+            "price": "5"
+        },
+        {
+            "index": 3, 
+            "icon": "",
+            "details": "cocktail",
+            "price": "7"
+        },
+        {
+            "index": 4, 
+            "icon": "",
+            "details": "premium",
+            "price": "10"
         }
        
     ]

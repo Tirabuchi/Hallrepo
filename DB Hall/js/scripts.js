@@ -7,6 +7,9 @@
 
 // todo aggiorna db e pensabbene come mettere pricing con tutti gli esempi (drinks, shot, tequilaPompelmo, drinkdellestate, birre)
 
+// todo add icons + prezzi (gen div inside e spera che non rompa tutto), adda pricecategory here in scripts (obj)
+// behaviour children
+
 
 addEventListener("load", (event) => {});
 
@@ -26,7 +29,6 @@ onload=(event)=>{
         baseData=json;
         console.log(json);
         dbLoaded(json);
-        loadObservers();
       }
     );
 }
@@ -73,29 +75,29 @@ function dbLoaded(data) {
             // nested accordion case
                 // check ingredients variants, initiate subPanel here
             
-            let ingredientsFound = false; // todo al momento se trova piu' ingredienti secondari compatibili crea due subPanel, sposta creaz subpanel sopra
+            let variantsFound = false;
             let subPanel = document.createElement("div");
                             subPanel.classList.add("subPanel");
 
-            for (let k=0; k<data.listino[i].elements[z].ingredients.length; k++) {
+            for (let k=0; k<data.listino[i].elements[z].variants.length; k++) {
 
                 for (let w=0; w<data.inventario.length; w++) {
 
                     // if found variants
 
-                    if (data.listino[i].elements[z].ingredients[k] == data.inventario[w].type) {
+                    if (data.listino[i].elements[z].variants[k] == data.inventario[w].type) {
                         ingredientFound = 1;
-                        console.log(data.listino[i].elements[z].ingredients[k]);
+                       // console.log(data.listino[i].elements[z].ingredients[k]);
                         el.classList.add("nestedAcc");
 
                         // if first ingredients package create panel, eitherwise add to it
-                        // todo with a counter of foundIngredientsPackage I can add multiple visualization classes from here
+                        // todo with a counter of foundIngredientsPackage I can add multiple visualization classes from here // edit: wtf?
 
-                            if (ingredientsFound==false) {
+                            if (variantsFound==false) {
                               el.after(subPanel);
                             }
 
-                            ingredientsFound = true;
+                            variantsFound = true;
                             
                         
                         for (let u=0; u<data.inventario[w].brands.length; u++) {
@@ -159,6 +161,22 @@ function filterListino(str, data) {
   for (let i=0; i<data.listino.length; i++) {
     for (let z=0; z<data.listino[i].elements.length; z++) {
 
+      //create obj here for later use
+
+      let obj = 
+      {
+        "category": data.listino[i].category,
+        "elements": [  
+          {
+       "name": data.listino[i].elements[z].name,
+       "ingredients": data.listino[i].elements[z].ingredients,
+       "details": data.listino[i].elements[z].details,
+       "icon": data.listino[i].elements[z].icon,
+       "isRestricted": data.listino[i].elements[z].isRestricted,
+       "variants": data.listino[i].elements[z].variants
+        }          ] 
+      }
+
 
       // filter by name or ingredients (checking ingredients is not empty)
       if (data.listino[i].elements[z].ingredients.length > 0) {
@@ -168,24 +186,11 @@ function filterListino(str, data) {
             if (data.listino[i].elements[z].name.includes(str) || data.listino[i].elements[z].ingredients[w].includes(str)) {
                console.log(data.listino[i].elements[z]);
             //   console.log(filteredData);
-            
+
                // creation conditions (check if parent exists, eitherwise create)
                if (filteredData.length == 0) {
 
                 // if first cat
-                let obj = 
-                {
-                  "category": data.listino[i].category,
-                  "elements": [  
-                    {
-                 "name": data.listino[i].elements[z].name,
-                 "ingredients": data.listino[i].elements[z].ingredients,
-                 "details": data.listino[i].elements[z].details,
-                 "icon": data.listino[i].elements[z].icon,
-                 "isRestricted": data.listino[i].elements[z].isRestricted
-                  }          ] 
-                }
-                console.log(obj);
 
                 filteredData.push(obj);
            //     console.log(filteredData);
@@ -195,31 +200,12 @@ function filterListino(str, data) {
 
                   if (filteredData[h].category == data.listino[i].category) {
   
-                    let obj = {
-                      "name": data.listino[i].elements[z].name,
-                      "ingredients": data.listino[i].elements[z].ingredients,
-                      "details": data.listino[i].elements[z].details,
-                      "icon": data.listino[i].elements[z].icon,
-                      "isRestricted": data.listino[i].elements[z].isRestricted
-                     }
      
                      filteredData[h].elements.push(obj);
                    //  console.log(filteredData);
   
                  } else if (h==filteredData.length-1) {
                 // if last iteration and cat hasnt been found
-                let obj = 
-                {
-                  "category": data.listino[i].category,
-                  "elements": [  
-                    {
-                 "name": data.listino[i].elements[z].name,
-                 "ingredients": data.listino[i].elements[z].ingredients,
-                 "details": data.listino[i].elements[z].details,
-                 "icon": data.listino[i].elements[z].icon,
-                 "isRestricted": data.listino[i].elements[z].isRestricted
-                  }          ] 
-                }
 
                 filteredData.push(obj);
              //   console.log(filteredData);
@@ -263,37 +249,16 @@ function filterListino(str, data) {
 
         if (filteredData[h].category == data.listino[i].category) {
 
-          let obj = {
-            "name": data.listino[i].elements[z].name,
-            "ingredients": data.listino[i].elements[z].ingredients,
-            "details": data.listino[i].elements[z].details,
-            "icon": data.listino[i].elements[z].icon,
-            "isRestricted": data.listino[i].elements[z].isRestricted
-           }
-
            filteredData[h].elements.push(obj);
            console.log(filteredData);
 
        } else if (h==filteredData.length-1) {
       // if last iteration and cat hasnt been found
-      let obj = 
-      {
-        "category": data.listino[i].category,
-        "elements": [  
-          {
-       "name": data.listino[i].elements[z].name,
-       "ingredients": data.listino[i].elements[z].ingredients,
-       "details": data.listino[i].elements[z].details,
-       "icon": data.listino[i].elements[z].icon,
-       "isRestricted": data.listino[i].elements[z].isRestricted
-        }          ] 
-      }
 
       filteredData.push(obj);
     //  console.log(filteredData);
 
        }
-
        }
 
      }
@@ -496,10 +461,5 @@ for (let i = 0; i < subAcc.length; i++) {
 
 }
 
-function loadObservers() {
-
- 
-
-}
 
 
